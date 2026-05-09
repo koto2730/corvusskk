@@ -302,7 +302,10 @@ HRESULT CTextService::_Update(TfEditCookie ec, ITfContext *pContext, BOOL fixed,
 		}
 	}
 
-	_EndInputModeWindow();
+	if (cx_showmodeinltm > 0)
+	{
+		_EndInputModeWindow();
+	}
 
 	if (inputkey && !fixed && !showcandlist && showentry &&
 		(((cx_untilcandlist != 1) && (candidx + 1 == cx_untilcandlist)) || (cx_untilcandlist == 1)) &&

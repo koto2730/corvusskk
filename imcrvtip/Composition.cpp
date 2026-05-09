@@ -19,7 +19,10 @@ STDAPI CTextService::OnCompositionTerminated(TfEditCookie ecWrite, ITfCompositio
 	}
 	_pComposition.Release();
 
-	_EndInputModeWindow();
+	if (cx_showmodeinltm > 0)
+	{
+		_EndInputModeWindow();
+	}
 
 	_ResetStatus();
 
@@ -216,7 +219,10 @@ void CTextService::_ClearComposition()
 	_EndCandidateList();
 	showcandlist = FALSE;
 
-	_EndInputModeWindow();
+	if (cx_showmodeinltm > 0)
+	{
+		_EndInputModeWindow();
+	}
 
 	if (_IsComposing())
 	{

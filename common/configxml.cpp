@@ -85,6 +85,7 @@ LPCWSTR ValueBackIncEnter = L"backincenter";
 LPCWSTR ValueAddCandKtkn = L"addcandktkn";
 LPCWSTR ValueEnToggleKana = L"entogglekana";
 LPCWSTR ValueSetByDirect = L"setbydirect";
+LPCWSTR ValueResetOnReON = L"resetonreon";
 
 LPCWSTR ValueCompMultiNum = L"compmultinum";
 LPCWSTR ValueStaCompMulti = L"stacompmulti";
@@ -179,6 +180,7 @@ LPCWSTR SectionVKeyMap = L"vkeymap";
 //keymap and vkeymap keys
 
 LPCWSTR ValueKeyMapKana = L"kana";
+LPCWSTR ValueKeyMapKanaConv = L"kanaconv";
 LPCWSTR ValueKeyMapConvChar = L"convchar";
 LPCWSTR ValueKeyMapJLatin = L"jlatin";
 LPCWSTR ValueKeyMapAscii = L"ascii";

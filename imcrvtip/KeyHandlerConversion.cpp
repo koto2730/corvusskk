@@ -133,7 +133,7 @@ BYTE CTextService::_GetSf(BYTE vk, WCHAR ch)
 					k = SKK_JMODE;
 				}
 			}
-			if (k != SKK_KANA && ch < CKEYMAPNUM)
+			if (k != SKK_KANA && k != SKK_KANA_CONV && ch < CKEYMAPNUM)
 			{
 				if (ckeymap.keylatin[ch] == SKK_JMODE)
 				{

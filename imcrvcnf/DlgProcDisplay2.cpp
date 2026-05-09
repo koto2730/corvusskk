@@ -45,7 +45,7 @@ INT_PTR CALLBACK DlgProcDisplay2(HWND hDlg, UINT message, WPARAM wParam, LPARAM 
 			n = strxmlval.empty() ? -1 : _wtoi(strxmlval.c_str()) * 1000;
 		}
 
-		if (n > 60000 || n <= 0)
+		if (n > 60000 || n < 0)
 		{
 			n = SHOWMODEINLTM_DEF;
 		}
@@ -165,7 +165,7 @@ void SaveDisplay2(IXmlWriter *pWriter, HWND hDlg)
 	SaveCheckButton(pWriter, hDlg, IDC_CHECKBOX_SHOWMODEINL, ValueShowModeInl);
 	GetDlgItemTextW(hDlg, IDC_EDIT_SHOWMODEINLTM, num, _countof(num));
 	count = _wtoi(num);
-	if (count <= 0 || count > 60000)
+	if (count < 0 || count > 60000)
 	{
 		count = SHOWMODEINLTM_DEF;
 	}

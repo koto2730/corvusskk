@@ -68,6 +68,37 @@ HRESULT CTextService::_HandleControl(TfEditCookie ec, ITfContext *pContext, BYTE
 		}
 		break;
 
+	case SKK_KANA_CONV:
+		if (abbrevmode && !showentry)
+		{
+			break;
+		}
+
+		switch (inputmode)
+		{
+		case im_hiragana:
+		case im_katakana:
+			if (inputkey && !showentry)
+			{
+				_ConvRoman();
+
+				if (okuriidx != 0)
+				{
+					kana.erase(okuriidx, 1);
+					okuriidx = 0;
+				}
+
+				//ひらがな/カタカナに変換
+				_ConvKanaToKana(kana, inputmode, kana, ((inputmode == im_hiragana) ? im_katakana : im_hiragana));
+				_HandleCharReturn(ec, pContext);
+				return S_OK;
+			}
+			break;
+		default:
+			break;
+		}
+		break;
+
 	case SKK_CONV_CHAR:
 		if (abbrevmode && !showentry)
 		{

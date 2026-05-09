@@ -7,10 +7,11 @@ static const struct {
 	int idd;
 	LPCWSTR keyName;
 	LPCWSTR defaultValue;
-} KeyMap[2][27] =
+} KeyMap[2][28] =
 {
 	{
 		{IDC_EDIT_KANA,			ValueKeyMapKana,		L"q"},
+		{IDC_EDIT_KANA_CONV,	ValueKeyMapKanaConv,	L""},
 		{IDC_EDIT_CONV_CHAR,	ValueKeyMapConvChar,	L"\\cq"},
 		{IDC_EDIT_JLATIN,		ValueKeyMapJLatin,		L"L"},
 		{IDC_EDIT_ASCII,		ValueKeyMapAscii,		L"l"},
@@ -40,6 +41,7 @@ static const struct {
 	},
 	{
 		{IDC_EDIT_KANA,			ValueKeyMapKana,		L""},
+		{IDC_EDIT_KANA_CONV,	ValueKeyMapKanaConv,	L""},
 		{IDC_EDIT_CONV_CHAR,	ValueKeyMapConvChar,	L""},
 		{IDC_EDIT_JLATIN,		ValueKeyMapJLatin,		L""},
 		{IDC_EDIT_ASCII,		ValueKeyMapAscii,		L""},
@@ -99,6 +101,7 @@ INT_PTR CALLBACK DlgProcKeyMap(HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 		switch (LOWORD(wParam))
 		{
 		case IDC_EDIT_KANA:
+		case IDC_EDIT_KANA_CONV:
 		case IDC_EDIT_CONV_CHAR:
 		case IDC_EDIT_JLATIN:
 		case IDC_EDIT_ASCII:

@@ -9,6 +9,7 @@ static const struct {
 	LPCWSTR keyname;
 } configkeymap[] =
 {
+	{SKK_KANA_CONV,	ValueKeyMapKanaConv},
 	{SKK_KANA,		ValueKeyMapKana},
 	{SKK_CONV_CHAR,	ValueKeyMapConvChar},
 	{SKK_JLATIN,	ValueKeyMapJLatin},
@@ -207,6 +208,7 @@ void CTextService::_LoadBehavior()
 	_ReadBoolValue(SectionBehavior, ValueAddCandKtkn, cx_addcandktkn, FALSE);
 	_ReadBoolValue(SectionBehavior, ValueEnToggleKana, cx_entogglekana, TRUE);
 	_ReadBoolValue(SectionBehavior, ValueSetByDirect, cx_setbydirect, FALSE);
+	_ReadBoolValue(SectionBehavior, ValueResetOnReON, cx_resetonreon, FALSE);
 
 	ReadValue(pathconfigxml, SectionBehavior, ValueCompMultiNum, strxmlval);
 	cx_compmultinum = _wtoi(strxmlval.c_str());
@@ -318,7 +320,7 @@ void CTextService::_LoadDisplay()
 		cx_showmodeinltm = strxmlval.empty() ? -1 : _wtoi(strxmlval.c_str()) * 1000;
 	}
 
-	if (cx_showmodeinltm > 60000 || cx_showmodeinltm <= 0)
+	if (cx_showmodeinltm > 60000 || cx_showmodeinltm < 0)
 	{
 		cx_showmodeinltm = SHOWMODEINLTM_DEF;
 	}

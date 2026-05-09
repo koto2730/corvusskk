@@ -79,6 +79,7 @@ extern LPCWSTR ValueBackIncEnter;
 extern LPCWSTR ValueAddCandKtkn;
 extern LPCWSTR ValueEnToggleKana;
 extern LPCWSTR ValueSetByDirect;
+extern LPCWSTR ValueResetOnReON;
 
 extern LPCWSTR ValueCompMultiNum;
 extern LPCWSTR ValueStaCompMulti;
@@ -173,6 +174,7 @@ extern LPCWSTR SectionVKeyMap;
 //keymap and vkeymap keys
 
 extern LPCWSTR ValueKeyMapKana;
+extern LPCWSTR ValueKeyMapKanaConv;
 extern LPCWSTR ValueKeyMapConvChar;
 extern LPCWSTR ValueKeyMapJLatin;
 extern LPCWSTR ValueKeyMapAscii;

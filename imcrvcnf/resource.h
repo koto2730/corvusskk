@@ -79,6 +79,7 @@
 #define IDC_CHECKBOX_ADDCANDKTKN                2011
 #define IDC_CHECKBOX_ENTOGGLEKANA               2012
 #define IDC_CHECKBOX_SETBYDIRECT                2013
+#define IDC_CHECKBOX_RESETONREON                2014
 
 #define IDC_COMBO_COMPMULTINUM                  2101
 #define IDC_CHECKBOX_STACOMPMULTI               2102
@@ -201,6 +202,7 @@
 
 #define IDC_EDIT_KANA                           4201
 #define IDC_EDIT_CONV_CHAR                      4202
+#define IDC_EDIT_KANA_CONV                      4220
 #define IDC_EDIT_JLATIN                         4203
 #define IDC_EDIT_ASCII                          4204
 #define IDC_EDIT_JMODE                          4205

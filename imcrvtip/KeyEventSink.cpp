@@ -61,6 +61,7 @@ BOOL CTextService::_IsKeyEaten(ITfContext *pContext, WPARAM wParam)
 		{
 		case SKK_CONV_POINT:
 		case SKK_KANA:
+		case SKK_KANA_CONV:
 		case SKK_CONV_CHAR:
 		case SKK_JLATIN:
 		case SKK_ASCII:
@@ -144,7 +145,10 @@ STDAPI CTextService::OnTestKeyDown(ITfContext *pic, WPARAM wParam, LPARAM lParam
 
 	*pfEaten = _IsKeyEaten(pic, wParam);
 
-	_EndInputModeWindow();
+	if (cx_showmodeinltm > 0)
+	{
+		_EndInputModeWindow();
+	}
 
 	if (!_IsKeyboardDisabled() && _IsKeyboardOpen() && !_IsComposing())
 	{
@@ -226,6 +230,11 @@ STDAPI CTextService::OnPreservedKey(ITfContext *pic, REFGUID rguid, BOOL *pfEate
 		}
 		else
 		{
+			if (cx_resetonreon)
+			{
+				_ClearComposition();
+				_KeyboardSetDefaultMode();
+			}
 			_UpdateLanguageBar();
 		}
 
