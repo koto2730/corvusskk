@@ -123,6 +123,15 @@ HRESULT CTextService::_Update(TfEditCookie ec, ITfContext *pContext, BOOL fixed,
 	else
 	{
 		std::wstring romandisp = roman;
+		//見出し入力中はローマ字バッファを大文字表示して、
+		//通常のローマ字待ち（小文字）と視覚的に区別する
+		if (inputkey)
+		{
+			for (auto& c : romandisp)
+			{
+				c = towupper(c);
+			}
+		}
 		if (cx_showromanjlat)
 		{
 			ASCII_JLATIN_CONV ajc = {};
