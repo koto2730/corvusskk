@@ -26,6 +26,13 @@ STDAPI CTextService::OnCompositionTerminated(TfEditCookie ecWrite, ITfCompositio
 
 	_ResetStatus();
 
+	//常時表示モードではcomposition終了後にBOXを再表示する
+	//(composition中はBOXが非表示になるため)
+	if (cx_showmodeinltm == 0)
+	{
+		_UpdateLanguageBar(TRUE);
+	}
+
 	return S_OK;
 }
 
@@ -222,6 +229,12 @@ void CTextService::_ClearComposition()
 	if (cx_showmodeinltm > 0)
 	{
 		_EndInputModeWindow();
+	}
+
+	//常時表示モードではcomposition終了後にBOXを再表示する
+	if (cx_showmodeinltm == 0)
+	{
+		_UpdateLanguageBar(TRUE);
 	}
 
 	if (_IsComposing())
