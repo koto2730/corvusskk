@@ -804,7 +804,10 @@ void CCandidateWindow::_ClearStatus()
 void CCandidateWindow::_RestoreStatusReg()
 {
 	_pTextService->inputmode = inputmode_bak;
-	_pTextService->_UpdateLanguageBar();
+	//showinputmode=FALSE: 言語バーアイコンのみ更新。
+	//compositionがまだ生きているためBOX操作はしない。
+	//BOX再表示はcomposition終了時(OnCompositionTerminated)に行う。
+	_pTextService->_UpdateLanguageBar(FALSE);
 	_pTextService->abbrevmode = abbrevmode_bak;
 	_pTextService->kana = kana_bak;
 	_pTextService->okuriidx = okuriidx_bak;
