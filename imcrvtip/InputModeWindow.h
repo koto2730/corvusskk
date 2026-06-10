@@ -28,6 +28,7 @@ public:
 	void _Show(BOOL bShow);
 	void _Redraw();
 	void _GetRect(LPRECT lpRect);
+	BOOL _HasWindow() const { return _hwnd != nullptr; }
 
 private:
 	LONG _cRef;

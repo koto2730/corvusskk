@@ -684,8 +684,8 @@ void CTextService::_UpdateLanguageBar(BOOL showinputmode)
 	{
 		if (cx_showmodeinltm == 0)
 		{
-			//常時表示モード: composition中も含めてBOXを維持し再描画で状態を更新
-			if (_pInputModeWindow != nullptr)
+			//常時表示モード: 有効なウィンドウがあれば再描画、なければ再作成
+			if (_pInputModeWindow != nullptr && _pInputModeWindow->_HasWindow())
 			{
 				_pInputModeWindow->_Redraw();
 			}

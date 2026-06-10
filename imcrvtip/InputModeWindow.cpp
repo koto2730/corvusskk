@@ -396,9 +396,7 @@ LRESULT CALLBACK CInputModeWindow::_WindowProc(HWND hWnd, UINT uMsg, WPARAM wPar
 		hmembmp = CreateCompatibleBitmap(hdc, r.right, r.bottom);
 		bmp = (HBITMAP)SelectObject(hmemdc, hmembmp);
 
-		//常時表示モードでcomposition中は太い枠で入力中であることを示す
-		int penWidth = (_pTextService->_IsComposing() && _pTextService->cx_showmodeinltm == 0) ? 2 : 1;
-		npen = CreatePen(PS_SOLID, penWidth, _pTextService->cx_mode_colors[CL_COLOR_MF]);
+		npen = CreatePen(PS_SOLID, 1, _pTextService->cx_mode_colors[CL_COLOR_MF]);
 		pen = (HPEN)SelectObject(hmemdc, npen);
 
 		color = RGB(0xFF, 0xFF, 0xFF);
@@ -468,6 +466,21 @@ LRESULT CALLBACK CInputModeWindow::_WindowProc(HWND hWnd, UINT uMsg, WPARAM wPar
 
 		GdiTransparentBlt(hmemdc, 0, 0, r.right, r.bottom, hmemdcR, 0, 0, r.right, r.bottom,
 			(_pTextService->cx_mode_colors[CL_COLOR_MC] ^ RGB(0xFF, 0xFF, 0xFF)));
+
+		//常時表示モードでcomposition中は4px枠で入力中であることを示す
+		if (_pTextService->_IsComposing() && _pTextService->cx_showmodeinltm == 0)
+		{
+			HPEN hCompPen = CreatePen(PS_SOLID, 1, RGB(0xFF, 0xC0, 0xC0));
+			HPEN hOldCompPen = (HPEN)SelectObject(hmemdc, hCompPen);
+			HBRUSH hOldCompBrush = (HBRUSH)SelectObject(hmemdc, GetStockObject(NULL_BRUSH));
+			for (int i = 0; i < 4; i++)
+			{
+				Rectangle(hmemdc, i, i, r.right - i, r.bottom - i);
+			}
+			SelectObject(hmemdc, hOldCompPen);
+			SelectObject(hmemdc, hOldCompBrush);
+			DeleteObject(hCompPen);
+		}
 
 		SelectObject(hmemdcR, bmpR);
 

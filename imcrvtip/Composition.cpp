@@ -193,34 +193,31 @@ public:
 
 void CTextService::_CancelComposition(TfEditCookie ec, ITfContext *pContext)
 {
+	// GetSelectionが失敗してもTerminateは必ず呼ぶ。
+	// _ClearCompositionが辞書登録コンテキストでセッションを要求した場合、
+	// そのコンテキストでGetSelectionが失敗しても元のコンテキストのcompositionを
+	// 終了させ、BOXを確実に復元する必要がある。
 	TF_SELECTION tfSelection = {};
 	ULONG cFetched = 0;
-	if (FAILED(pContext->GetSelection(ec, TF_DEFAULT_SELECTION, 1, &tfSelection, &cFetched)))
+	if (SUCCEEDED(pContext->GetSelection(ec, TF_DEFAULT_SELECTION, 1, &tfSelection, &cFetched)) && cFetched == 1)
 	{
-		return;
-	}
+		CComPtr<ITfRange> pRangeSelection;
+		pRangeSelection.Attach(tfSelection.range);
 
-	CComPtr<ITfRange> pRangeSelection;
-	pRangeSelection.Attach(tfSelection.range);
-
-	if (cFetched != 1)
-	{
-		return;
-	}
-
-	if (_IsComposing())
-	{
-		CComPtr<ITfRange> pRange;
-		if (SUCCEEDED(_pComposition->GetRange(&pRange)) && (pRange != nullptr))
+		if (_IsComposing())
 		{
-			if (_IsRangeCovered(ec, tfSelection.range, pRange))
+			CComPtr<ITfRange> pRange;
+			if (SUCCEEDED(_pComposition->GetRange(&pRange)) && (pRange != nullptr))
 			{
-				pRange->SetText(ec, 0, L"", 0);
+				if (_IsRangeCovered(ec, tfSelection.range, pRange))
+				{
+					pRange->SetText(ec, 0, L"", 0);
 
-				tfSelection.range->ShiftEndToRange(ec, pRange, TF_ANCHOR_END);
-				tfSelection.range->Collapse(ec, TF_ANCHOR_END);
+					tfSelection.range->ShiftEndToRange(ec, pRange, TF_ANCHOR_END);
+					tfSelection.range->Collapse(ec, TF_ANCHOR_END);
 
-				pContext->SetSelection(ec, 1, &tfSelection);
+					pContext->SetSelection(ec, 1, &tfSelection);
+				}
 			}
 		}
 	}
