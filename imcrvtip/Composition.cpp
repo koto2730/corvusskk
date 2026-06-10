@@ -143,12 +143,20 @@ void CTextService::_TerminateComposition(TfEditCookie ec, ITfContext *pContext)
 		return;
 	}
 
+	BOOL bEndCompositionCalled = FALSE;
 	if (_IsComposing())
 	{
 		_ClearCompositionDisplayAttributes(ec, pContext);
-		_pComposition->EndComposition(ec);
+		// EndComposition triggers OnCompositionTerminated (which re-shows BOX in permanent mode).
+		// If it fails (e.g. wrong context), OnCompositionTerminated won't fire — handle below.
+		bEndCompositionCalled = SUCCEEDED(_pComposition->EndComposition(ec));
 	}
 	_pComposition.Release();
+
+	if (!bEndCompositionCalled && cx_showmodeinltm == 0)
+	{
+		_UpdateLanguageBar(TRUE);
+	}
 }
 
 void CTextService::_EndComposition(ITfContext *pContext)
@@ -231,11 +239,7 @@ void CTextService::_ClearComposition()
 		_EndInputModeWindow();
 	}
 
-	//常時表示モードではcomposition終了後にBOXを再表示する
-	if (cx_showmodeinltm == 0)
-	{
-		_UpdateLanguageBar(TRUE);
-	}
+	//BOX再表示はOnCompositionTerminated/_TerminateCompositionのfallbackで行う
 
 	if (_IsComposing())
 	{
