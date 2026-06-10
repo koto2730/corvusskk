@@ -88,6 +88,7 @@ public:
 					if (SUCCEEDED(pContextComposition->StartComposition(ec, pRange, _pTextService, &pComposition)) && (pComposition != nullptr))
 					{
 						_pTextService->_SetComposition(pComposition);
+						_pTextService->_RedrawInputModeWindow();
 
 						TF_SELECTION tfSelection = {};
 						tfSelection.range = pRange;

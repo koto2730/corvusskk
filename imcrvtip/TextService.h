@@ -224,6 +224,7 @@ public:
 	// InputModeWindow
 	void _StartInputModeWindow();
 	void _EndInputModeWindow();
+	void _RedrawInputModeWindow();
 
 	// FunctionProvider
 	HRESULT _GetRangeText(ITfRange *pRange, std::wstring &text);

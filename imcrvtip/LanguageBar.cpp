@@ -680,9 +680,28 @@ void CTextService::_UpdateLanguageBar(BOOL showinputmode)
 		_pLangBarItemI->_Update();
 	}
 
-	if (showinputmode && cx_showmodeinl && !_IsComposing() && (!_UILessMode || _CanShowUIElement()))
+	if (showinputmode && cx_showmodeinl && (!_UILessMode || _CanShowUIElement()))
 	{
-		_StartInputModeWindow();
+		if (cx_showmodeinltm == 0)
+		{
+			//常時表示モード: composition中も含めてBOXを維持し再描画で状態を更新
+			if (_pInputModeWindow != nullptr)
+			{
+				_pInputModeWindow->_Redraw();
+			}
+			else if (!_IsComposing())
+			{
+				_StartInputModeWindow();
+			}
+		}
+		else if (!_IsComposing())
+		{
+			_StartInputModeWindow();
+		}
+		else
+		{
+			_EndInputModeWindow();
+		}
 	}
 	else
 	{

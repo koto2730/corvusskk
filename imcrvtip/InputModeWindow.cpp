@@ -396,7 +396,9 @@ LRESULT CALLBACK CInputModeWindow::_WindowProc(HWND hWnd, UINT uMsg, WPARAM wPar
 		hmembmp = CreateCompatibleBitmap(hdc, r.right, r.bottom);
 		bmp = (HBITMAP)SelectObject(hmemdc, hmembmp);
 
-		npen = CreatePen(PS_SOLID, 1, _pTextService->cx_mode_colors[CL_COLOR_MF]);
+		//常時表示モードでcomposition中は太い枠で入力中であることを示す
+		int penWidth = (_pTextService->_IsComposing() && _pTextService->cx_showmodeinltm == 0) ? 2 : 1;
+		npen = CreatePen(PS_SOLID, penWidth, _pTextService->cx_mode_colors[CL_COLOR_MF]);
 		pen = (HPEN)SelectObject(hmemdc, npen);
 
 		color = RGB(0xFF, 0xFF, 0xFF);
@@ -649,4 +651,12 @@ void CTextService::_EndInputModeWindow()
 		_pInputModeWindow->_Destroy();
 	}
 	_pInputModeWindow.Release();
+}
+
+void CTextService::_RedrawInputModeWindow()
+{
+	if (_pInputModeWindow != nullptr)
+	{
+		_pInputModeWindow->_Redraw();
+	}
 }
